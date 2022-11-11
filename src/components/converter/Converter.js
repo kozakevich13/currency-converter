@@ -2,12 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import './styles.css'
-import String from '../components/string/String';
+import String from '../string/String';
 import { useSelector, useDispatch } from 'react-redux';
 import {
 	getExchangeRates,
 	fetchExchangeRates,
-} from '../redux/ExchangeRatesSlice';
+} from '../../redux/ExchangeRatesSlice';
 
 const Converter = () => {
 	const dispatch = useDispatch();
