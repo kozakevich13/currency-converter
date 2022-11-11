@@ -100,18 +100,7 @@ export default function App() {
   return (
     <div className="App">
       <Header/>
-      <Converter
-        data={data}
-        money={money}
-        onMoneyChangeFrom={onMoneyChangeFrom}
-        onMoneyChangeTo={onMoneyChangeTo}
-        firstInput={firstInput}
-        secondInput={secondInput}
-        toAmount={toAmount}
-        fromAmount={fromAmount}
-        handleFromCurreny={handleFromCurrency}
-        handleToCurrency={handleToCurrency}
-      />
+      <Converter/>
     </div>
   );
 }

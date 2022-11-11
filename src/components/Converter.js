@@ -1,50 +1,61 @@
-import React from "react";
-import "../App.css"
+/** @format */
 
-function Converter(props) {
-  return (
-    <div className="conveter_container">
-      <p>
-        {props.fromAmount} {props.firstInput} is eqauls to
-      </p>
-      <h3>
-        {props.toAmount} {props.secondInput}
-      </h3>
-      <div>
-        <input
-          type="number"
-          value={props.fromAmount}
-          onChange={props.onMoneyChangeFrom}
-          min="1"
-        />
-        <select value={props.firstInput} onChange={props.handleFromCurreny}>
-          {props.data.map((rate) => {
-            return (
-              <option key={rate} value={rate}>
-                {rate}
-              </option>
-            );
-          })}
-        </select>
-      </div>
-      <div>
-        <input
-          type="number"
-          value={props.toAmount}
-          onChange={props.onMoneyChangeTo}
-          min="1"
-        />
-        <select value={props.secondInput} onChange={props.handleToCurrency}>
-          {props.data.map((rate) => {
-            return (
-              <option key={rate} value={rate}>
-                {rate}
-              </option>
-            );
-          })}
-        </select>
-      </div>
-    </div>
-  );
-}
+import React, { useState, useEffect } from 'react';
+import './styles.css'
+import String from '../components/string/String';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+	getExchangeRates,
+	fetchExchangeRates,
+} from '../redux/ExchangeRatesSlice';
+
+const Converter = () => {
+	const dispatch = useDispatch();
+	const exchangeRates = useSelector(getExchangeRates);
+	const [leftValue, setLeftValue] = useState(0);
+	const [rightValue, setRightValue] = useState(0);
+	const [leftCharCode, setLeftCharCode] = useState('UAH');
+	const [rightCharCode, setRightCharCode] = useState('USD');
+
+	useEffect(() => {
+		dispatch(fetchExchangeRates());
+		console.log(1);
+	}, [dispatch]);
+
+	const recalculateRight = (value, сharCode) => {
+		let nextValue = (
+			(value * exchangeRates[rightCharCode]) /
+			exchangeRates[сharCode]
+		).toFixed(2);
+		setRightValue(nextValue);
+	};
+
+	const recalculateLeft = (value, сharCode) => {
+		let nextValue = (
+			(value * exchangeRates[leftCharCode]) /
+			exchangeRates[сharCode]
+		).toFixed(2);
+		setLeftValue(nextValue);
+	};
+
+	return (
+		<div className='Converter'>
+			<String
+				value={leftValue}
+				setValue={setLeftValue}
+				charCode={leftCharCode}
+				setCharCode={setLeftCharCode}
+				recalculate={recalculateRight}
+			/>
+			<String
+				value={rightValue}
+				setValue={setRightValue}
+				charCode={rightCharCode}
+				setCharCode={setRightCharCode}
+				recalculate={recalculateLeft}
+			/>
+		</div>
+	);
+};
+
 export default Converter;
