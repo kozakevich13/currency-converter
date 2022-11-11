@@ -55,7 +55,7 @@ const String = ({
 				value={charCode}
 				onChange={getCharCode()}>
 				{allCharCode.map((item, i) => {
-					return <option value={item}>{item}</option>;
+					return <option value={item} key={item}>{item}</option>;
 				})}
 			</select>
 		</div>

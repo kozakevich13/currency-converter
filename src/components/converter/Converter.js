@@ -19,7 +19,6 @@ const Converter = () => {
 
 	useEffect(() => {
 		dispatch(fetchExchangeRates());
-		console.log(1);
 	}, [dispatch]);
 
 	const recalculateRight = (value, сharCode) => {
